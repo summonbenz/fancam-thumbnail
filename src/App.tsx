@@ -50,6 +50,7 @@ function App() {
   const [selectedFont, setSelectedFont] = useState('Chonburi');
   const [textPosition, setTextPosition] = useState('bottom-left');
   const [locationPosition, setLocationPosition] = useState('top-center');
+  const [locationFont, setLocationFont] = useState('Poppins');
   const [crop, setCrop] = useState<Crop>({
     unit: '%',
     width: 100,
@@ -133,7 +134,7 @@ function App() {
           if (locationPosition.endsWith('center')) align3 = 'center';
           if (locationPosition.endsWith('right')) align3 = 'right';
           ctx.textAlign = align3;
-          ctx.font = `${descFontSize}px ${selectedFont}`;
+          ctx.font = `${descFontSize}px ${locationFont}`;
           const { x: x3, yTitle: y3 } = getTextCoords(locationPosition, canvas, titleFontSize, descFontSize, true);
           ctx.fillText(location, x3, y3);
         }
@@ -144,7 +145,7 @@ function App() {
         ctx.shadowOffsetY = 0;
       }
     }
-  }, [crop, title, description, selectedFont, textPosition, location, locationPosition]);
+  }, [crop, title, description, selectedFont, textPosition, location, locationPosition, locationFont]);
 
   useEffect(() => {
     updatePreview();
@@ -197,7 +198,7 @@ function App() {
           if (locationPosition.endsWith('center')) align3 = 'center';
           if (locationPosition.endsWith('right')) align3 = 'right';
           ctx.textAlign = align3;
-          ctx.font = '40px ' + selectedFont;
+          ctx.font = '40px ' + locationFont;
           const { x: x3, yTitle: y3 } = getTextCoords(locationPosition, canvas, titleFontSize, descFontSize, true);
           ctx.fillText(location, x3, y3);
         }
@@ -385,6 +386,20 @@ function App() {
                       {POSITION_OPTIONS.map((pos) => (
                         <MenuItem key={pos.value} value={pos.value}>
                           {pos.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel>Location Font</InputLabel>
+                    <Select
+                      value={locationFont}
+                      label="Location Font"
+                      onChange={(e) => setLocationFont(e.target.value)}
+                    >
+                      {FONT_OPTIONS.map((font) => (
+                        <MenuItem key={font.value} value={font.value}>
+                          {font.name}
                         </MenuItem>
                       ))}
                     </Select>
